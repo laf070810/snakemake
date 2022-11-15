@@ -911,7 +911,7 @@ def parse_set_resource_scope(args):
             )
         except ResourceScopesException as err:
             invalid_resources = ", ".join(
-                f"'{res}={scope}'" for res, scope in err.invalid_resources.items()
+                repr(f"{res}={scope}") for res, scope in err.invalid_resources.items()
             )
             raise ValueError(f"{err.msg} (got {invalid_resources})")
 

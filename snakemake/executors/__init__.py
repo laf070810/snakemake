@@ -114,6 +114,7 @@ class AbstractExecutor:
         return format_cli_arg("--default-resources", default_resources.args)
 
     def get_resource_scopes_args(self):
+        assert False, "This should not be called at all"
         return format_cli_arg(
             "--set-resource-scopes", self.workflow.overwrite_resource_scopes
         )
@@ -351,7 +352,6 @@ class RealExecutor(AbstractExecutor):
                 self.get_set_resources_args(),
                 self.get_default_remote_provider_args(),
                 self.get_default_resources_args(),
-                self.get_resource_scopes_args(),
                 self.get_workdir_arg(),
                 format_cli_arg("--mode", self.get_exec_mode()),
             ]
