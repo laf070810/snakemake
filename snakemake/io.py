@@ -58,6 +58,8 @@ class Mtime:
             return self._local_target
         return self._local
 
+    def __repr__(self):
+        return f"Mtime({self.local_or_remote()!r})"
 
 def lutime(f, times):
     # In some cases, we have a platform where os.supports_follow_symlink includes stat()

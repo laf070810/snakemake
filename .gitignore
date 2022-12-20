@@ -9,8 +9,8 @@ dist/
 *.egg
 .eggs/
 .snakemake*
-.venv
-.venv/*
+[._]venv
+[._]venv/*
 .python-version
 
 

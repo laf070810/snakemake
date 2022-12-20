@@ -630,6 +630,7 @@ class Workflow:
         targetrules = set(
             chain(
                 rules(targets),
+                rules([tjob.rulename for tjob in target_jobs or []]),
                 filterfalse(Rule.has_wildcards, priorityrules),
                 filterfalse(Rule.has_wildcards, forcerules),
                 filterfalse(Rule.has_wildcards, untilrules),
