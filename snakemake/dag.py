@@ -1084,6 +1084,7 @@ class DAG:
             elif updated_subworkflow_input:
                 reason.updated_input.update(updated_subworkflow_input)
             elif job in self.targetjobs:
+                reason.target = True
                 # TODO find a way to handle added/removed input files here?
                 if not job.has_products():
                     if job.input:

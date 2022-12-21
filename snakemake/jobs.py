@@ -1599,6 +1599,7 @@ class Reason:
         self.derived = True
         self.pipe = False
         self.service = False
+        self.target = False
         self.cleanup_metadata_instructions = None
 
     def set_cleanup_metadata_instructions(self, job):
@@ -1711,6 +1712,10 @@ class Reason:
                     s.append(
                         "Job provides a service which has to be kept active until all consumers are finished."
                     )
+                if self.target:
+                    s.append(
+                        "Rule was explicitly specified as a target rule."
+                    )
 
                 if self.input_changed:
                     s.append("Set of input files has changed since last execution")
@@ -1742,5 +1747,6 @@ class Reason:
             or self.params_changed
             or self.software_stack_changed
             or self.input_changed
+            or self.target
         )
         return v and not self.finished
