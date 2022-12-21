@@ -425,6 +425,7 @@ class RealExecutor(AbstractExecutor):
                 "-m snakemake",
                 format_cli_arg("--snakefile", self.get_snakefile()),
                 self.get_job_args(job),
+                "--forceall --quiet",
                 self.general_args,
                 suffix,
             ]
