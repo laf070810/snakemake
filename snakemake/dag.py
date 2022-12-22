@@ -27,7 +27,7 @@ from snakemake.io import (
     is_flagged,
     IOFile,
 )
-from snakemake.jobs import Reason, JobFactory, GroupJobFactory, Job
+from snakemake.jobs import Reason, JobFactory, GroupJobFactory, Job, TargetSpec
 from snakemake.exceptions import MissingInputException, WildcardError
 from snakemake.exceptions import MissingRuleException, AmbiguousRuleException
 from snakemake.exceptions import CyclicGraphException, MissingOutputException
@@ -1081,10 +1081,15 @@ class DAG:
                 or not self.forcefiles.isdisjoint(job.output)
             ):
                 reason.forced = True
+            elif (
+                  self.target_jobs_def and
+                  TargetSpec(job.rule.name, job.wildcards_dict) in self.target_jobs_def
+            ):
+                # job was specified via --target-jobs on command line
+                reason.target = True
             elif updated_subworkflow_input:
                 reason.updated_input.update(updated_subworkflow_input)
             elif job in self.targetjobs:
-                reason.target = True
                 # TODO find a way to handle added/removed input files here?
                 if not job.has_products():
                     if job.input:
