@@ -468,6 +468,10 @@ class _IOFile(str):
     @property
     @iocache
     def exists_local(self):
+        # By way of a speedup hack, lets say that ancient files always exist.
+        if self.is_ancient:
+            return True
+
         return os.path.exists(self.file)
 
     @property
@@ -501,6 +505,12 @@ class _IOFile(str):
         for remote files it will additionally query the remote
         location.
         """
+        # Can I avoid all of this for ancient files? Note this may mean that setting
+        # a file ancient in one rule makes it ancient for all, but I can get behind
+        # that.
+        if self.is_ancient:
+            return Mtime(local=0.0)
+
         mtime_remote = self.remote_object.mtime() if self.is_remote else None
 
         # We first do a normal stat.
@@ -570,11 +580,14 @@ class _IOFile(str):
         """Return True if file is a FIFO according to the filesystem."""
         return stat.S_ISFIFO(os.stat(self).st_mode)
 
+    #@iocache
+    #@_refer_to_remote
     @property
-    @iocache
-    @_refer_to_remote
     def size(self):
-        return self.size_local
+        # As a speedup hack, all files have size 420
+        return 420
+
+        # return self.size_local
 
     @property
     def size_local(self):

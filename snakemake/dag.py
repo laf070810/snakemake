@@ -193,6 +193,7 @@ class DAG:
 
     def init(self, progress=False):
         """Initialise the DAG."""
+
         for job in map(self.rule2job, self.targetrules):
             job = self.update([job], progress=progress, create_inventory=True)
             self.targetjobs.add(job)
@@ -226,6 +227,7 @@ class DAG:
 
         self.update_container_imgs()
         self.update_conda_envs()
+
 
         self.update_needrun(create_inventory=True)
         self.set_until_jobs()
@@ -1122,12 +1124,13 @@ class DAG:
                 if output_mintime_:
                     # Input is updated if it is newer that the oldest output file
                     # and does not have the same checksum as the one previously recorded.
+                    # As a speedup hack, the checksum check has been disabled
                     updated_input = [
                         f
                         for f in job.input
                         if f.exists
                         and f.is_newer(output_mintime_)
-                        and not is_same_checksum(f, job)
+                        # and not is_same_checksum(f, job)
                     ]
                     reason.updated_input.update(updated_input)
                 if not updated_input:

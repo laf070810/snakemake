@@ -379,8 +379,9 @@ class Job(AbstractJob):
             if self.dag.workflow.run_local or self.is_local:
                 skip_evaluation = None
             else:
-                # tmpdir should be evaluated in the context of the actual execution
-                skip_evaluation = {"tmpdir"}
+                # tmpdir should be evaluated in the context of the actual execution,
+                # and disk_mb requires checking all file sizes which is slow
+                skip_evaluation = {"tmpdir", "disk_mb"}
             self._resources = self.rule.expand_resources(
                 self.wildcards_dict,
                 self.input,
