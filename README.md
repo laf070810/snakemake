@@ -21,3 +21,12 @@ Finally, Snakemake workflows can entail a description of required software, whic
 **Homepage: https://snakemake.github.io**
 
 Copyright (c) 2012-2022 Johannes Köster <johannes.koester@uni-due.com> (see LICENSE)
+
+# This Fork
+
+This repo (EdinburghGenomics/snakemake) contains patches to make Snakemake DAG building significantly faster on Lustre
+filesystems where `stat` calls are relatively slow. It was primarily made to support the data pipelines found
+elsewhere under the EdinburghGenomics GitHub area.
+
+I'd hope to re-work some or all of these as enhancements in upstream,
+but for now they actually break features of Snakemake (albeit ones that I don't use!) so I can't just make a PR from this fork.
