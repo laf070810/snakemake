@@ -2651,18 +2651,9 @@ def main(argv=None):
             if args.jobs is not None:
                 args.cores = parse_cores(args.jobs)
                 args.jobs = None
-            elif args.dryrun:
-                # dryrun with single core if nothing specified
-                args.cores = 1
             else:
-                print(
-                    "Error: you need to specify the maximum number of CPU cores to "
-                    "be used at the same time. If you want to use N cores, say --cores N or "
-                    "-cN. For all cores on your system (be sure that this is appropriate) "
-                    "use --cores all. For no parallelization use --cores 1 or -c1.",
-                    file=sys.stderr,
-                )
-                sys.exit(1)
+                # run with single core if nothing specified
+                args.cores = 1
 
     if non_local_exec:
         if args.jobs is None:

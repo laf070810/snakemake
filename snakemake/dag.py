@@ -273,14 +273,19 @@ class DAG:
 
     def cleanup_workdir(self):
         for job in self.jobs:
+            if not self.finished(job):
+                # For speed - don't clean up jobs what didn't run.
+                continue
+
             if not self.is_edit_notebook_job(job):
                 for io_dir in set(
                     os.path.dirname(io_file)
                     for io_file in chain(job.output, job.input)
-                    if not os.path.exists(io_file)
                 ):
-                    if os.path.exists(io_dir) and not len(os.listdir(io_dir)):
+                    try:
                         os.removedirs(io_dir)
+                    except OSError:
+                        pass
 
     def cleanup(self):
         self.job_cache.clear()
