@@ -185,8 +185,11 @@ class Env:
                 # By this, moving the working directory around automatically
                 # invalidates all environments. This is necessary, because binaries
                 # in conda environments can contain hardcoded absolute RPATHs.
-                env_dir = os.path.realpath(self._env_dir)
-                md5hash.update(env_dir.encode())
+
+                # But on Cirrus we have different paths on the nodes and the symlinks
+                # make it work, so actually this breaks things.
+                #env_dir = os.path.realpath(self._env_dir)
+                #md5hash.update(env_dir.encode())
                 if self._container_img:
                     md5hash.update(self._container_img.url.encode())
                 content_deploy = self.content_deploy
