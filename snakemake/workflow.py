@@ -1247,12 +1247,13 @@ class Workflow(WorkflowExecutorInterface):
                     log_provenance_info()
                 raise e
 
-            if (
-                not self.remote_execution_settings.immediate_submit
-                and not self.dryrun
-                and self.exec_mode == ExecMode.DEFAULT
-            ):
-                self.dag.cleanup_workdir()
+            # Removing this part can accelerate finalization of DAG execution:
+            # if (
+            #     not self.remote_execution_settings.immediate_submit
+            #     and not self.dryrun
+            #     and self.exec_mode == ExecMode.DEFAULT
+            # ):
+            #     self.dag.cleanup_workdir()
 
             if not dryrun_or_touch:
                 async_run(self.dag.store_storage_outputs())
