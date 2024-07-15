@@ -598,6 +598,7 @@ class _IOFile(str, AnnotatedStringInterface):
         return os.path.getsize(self.file)
 
     async def is_checksum_eligible(self):
+        return False
         return (
             await self.exists_local()
             and not os.path.isdir(self.file)
