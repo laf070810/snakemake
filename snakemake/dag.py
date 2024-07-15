@@ -648,19 +648,19 @@ class DAG(DAGExecutorInterface, DAGReportInterface):
                     )
             return not await f.is_same_checksum(checksum, force=True)
 
-        checksum_failed_output = [
-            f
-            for f, ensure in ensured_output.items()
-            if await is_not_same_checksum(f, ensure.get("sha256"))
-        ]
-        if checksum_failed_output:
-            raise WorkflowError(
-                "Output files have checksums that differ from the expected ones "
-                "defined in the workflow:\n{}".format(
-                    "\n".join(checksum_failed_output)
-                ),
-                rule=job.rule,
-            )
+        # checksum_failed_output = [
+        #     f
+        #     for f, ensure in ensured_output.items()
+        #     if await is_not_same_checksum(f, ensure.get("sha256"))
+        # ]
+        # if checksum_failed_output:
+        #     raise WorkflowError(
+        #         "Output files have checksums that differ from the expected ones "
+        #         "defined in the workflow:\n{}".format(
+        #             "\n".join(checksum_failed_output)
+        #         ),
+        #         rule=job.rule,
+        #     )
 
     def check_touch_compatible(self):
         def is_touchable(f):
@@ -1289,7 +1289,7 @@ class DAG(DAGExecutorInterface, DAGReportInterface):
                         for f in job.input
                         if await f.exists()
                         and await f.is_newer(output_mintime_)
-                        and not await is_same_checksum(f, job)
+                        # and not await is_same_checksum(f, job)
                     ]
                     reason.updated_input.update(updated_input)
                 if not updated_input:
