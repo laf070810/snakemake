@@ -23,3 +23,9 @@ Finally, Snakemake workflows can entail a description of required software, whic
 **Homepage: https://snakemake.github.io**
 
 Copyright (c) 2012-2022 Johannes Köster <johannes.koester@uni-due.com> (see LICENSE)
+
+# This Fork
+
+This repo (laf070810/snakemake) is similar to [EdinburghGenomics/snakemake](https://github.com/edinburghGenomics/snakemake). Both make Snakemake DAG building significantly faster. While [EdinburghGenomics/snakemake](https://github.com/edinburghGenomics/snakemake) focus on file metadata checking and part of file checksumming, this repo focus on completely disabling file checksumming. 
+
+Like [EdinburghGenomics/snakemake](https://github.com/edinburghGenomics/snakemake), this repo is also quick and temporary. Systematic re-work of the hacked slow part is desired, e.g. avoiding large file checksumming or adding an config option to disable file checksumming. 
