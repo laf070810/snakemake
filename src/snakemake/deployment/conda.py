@@ -643,10 +643,11 @@ class Env:
                                 )
                             logger.warning(
                                 f"Failed to install conda environment from pin file ({self.pin_file.get_path_or_uri()}). "
-                                f"Trying regular environment definition file.{advice}\n"
                                 f"Error message:\n{e.output}"
                             )
-                            out = create_env(env_file, filetype="yaml")
+                            raise CreateCondaEnvironmentException(
+                                f"Could not create conda environment from {env_file}:\nCommand:\n{e.cmd}\nOutput:\n{e.output}"
+                            )
                     else:
                         out = create_env(env_file, filetype="yaml")
 
